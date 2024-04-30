@@ -1,5 +1,6 @@
 package com.example.kotlintp
 
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,7 +25,9 @@ class LoginActivity : AppCompatActivity() {
 
         connectionButton.setOnClickListener {
             saveUsernameToSharedPreferences()
+            openGameActivity()
 
+            // For testing purpose, send username from sharedpreferences in logcat
             val sharedPreferences: SharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE)
             val retrievedUsername = sharedPreferences.getString("username", "")
             Log.d("LoginActivity", "Retrieved Username: $retrievedUsername")
@@ -38,5 +41,10 @@ class LoginActivity : AppCompatActivity() {
         val username = usernameInput.text.toString()
         editor.putString("username", username)
         editor.apply()
+    }
+
+    private fun openGameActivity() {
+        val gameActivityIntent = Intent(this, GameActivity::class.java)
+        startActivity(gameActivityIntent)
     }
 }
