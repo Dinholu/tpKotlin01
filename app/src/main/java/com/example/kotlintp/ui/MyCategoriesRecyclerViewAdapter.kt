@@ -1,8 +1,7 @@
-package com.example.kotlintp
+package com.example.kotlintp.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -42,7 +41,6 @@ class MyCategoriesRecyclerViewAdapter(
         fun bind(category: Categories) {
             idView.text = category.id.toString()
             contentView.text = category.name
-            // Charger l'image de l'URL en utilisant Glide
             Glide.with(itemView.context)
                 .load(category.imageUrl)
                 .into(imageViewCategory)

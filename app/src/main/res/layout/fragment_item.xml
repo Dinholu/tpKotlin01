@@ -10,7 +10,9 @@
         android:id="@+id/imageViewCategory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/circle"
+        />
 
     <!-- TextView pour afficher l'ID de la catégorie -->
     <TextView
