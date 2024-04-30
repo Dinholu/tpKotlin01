@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="16dp">
 
+    <!-- ImageView pour afficher une image -->
+    <ImageView
+        android:id="@+id/imageViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp" />
+
+    <!-- TextView pour afficher l'ID de la catégorie -->
     <TextView
         android:id="@+id/item_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
 
+    <!-- TextView pour afficher le nom de la catégorie -->
     <TextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_marginStart="16dp" />
+
+    <!-- Bouton pour participer au quiz -->
+    <Button
+        android:id="@+id/buttonParticipate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Participer"
+        android:layout_marginStart="16dp" />
+
 </LinearLayout>
