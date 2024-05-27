@@ -10,7 +10,7 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, CategoriesFragment.newInstance(1))
+            .replace(R.id.fragmentContainer, CategoriesFragment())
             .commit()
 
         val sharedPreferences: SharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE)

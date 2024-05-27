@@ -1,50 +1,28 @@
 package com.example.kotlintp
 
 import android.content.Intent
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 
 class LoginActivity : AppCompatActivity() {
-
-    private lateinit var usernameInput : EditText
-    private lateinit var connectionButton : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        usernameInput = findViewById(R.id.username)
-        connectionButton = findViewById(R.id.login)
-        connectionButton.isEnabled = true
+        val editTextUsername = findViewById<EditText>(R.id.editTextUsername)
+        val buttonLogin = findViewById<Button>(R.id.buttonLogin)
 
-        connectionButton.setOnClickListener {
-            saveUsernameToSharedPreferences()
-            openGameActivity()
-
-            // For testing purpose, send username from sharedpreferences in logcat
-            val sharedPreferences: SharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE)
-            val retrievedUsername = sharedPreferences.getString("username", "")
-            Log.d("LoginActivity", "Retrieved Username: $retrievedUsername")
+        buttonLogin.setOnClickListener {
+            val username = editTextUsername.text.toString()
+            if (username.isNotEmpty()) {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.putExtra("USERNAME", username)
+                startActivity(intent)
+                finish()
+            }
         }
-    }
-
-    private fun saveUsernameToSharedPreferences() {
-        val sharedPreferences: SharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        val username = usernameInput.text.toString()
-        editor.putString("username", username)
-        editor.apply()
-    }
-
-    private fun openGameActivity() {
-        val gameActivityIntent = Intent(this, GameActivity::class.java)
-        startActivity(gameActivityIntent)
     }
 }

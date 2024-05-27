@@ -1,3 +1,4 @@
+/*
 package com.example.kotlintp
 
 import android.os.Bundle
@@ -62,4 +63,4 @@ class CategoriesFragment : Fragment() {
                 }
             }
     }
-}
+}*/
