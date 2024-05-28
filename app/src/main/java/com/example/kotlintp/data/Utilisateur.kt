@@ -1,6 +1,7 @@
 package com.example.kotlintp.data
 
-class Utilisateur (
+//@Entity(tablename = "utilisateurs")
+data class Utilisateur (
     val Id : Int,
     val Pseudo : String,
 )
