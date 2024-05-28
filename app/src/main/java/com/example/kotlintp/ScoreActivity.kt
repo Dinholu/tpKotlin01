@@ -12,8 +12,12 @@ class ScoreActivity : AppCompatActivity() {
 
         val sharedPreferences: SharedPreferences = getSharedPreferences("AppData", MODE_PRIVATE)
         val scores = sharedPreferences.getString("ScoreMusic", "")
-        val textScore: TextView = findViewById(R.id.TextScore)
+        val textScore: TextView = findViewById(R.id.TextScoreUsername)
         textScore.text = scores;
+    }
+
+    fun getFromDatabase() {
+
     }
 
     fun getDictFromSharedPref(sharedprefvalue : String): MutableMap<String, Int> {
