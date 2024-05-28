@@ -8,5 +8,11 @@ interface I_Utilisateur {
     fun getUserByUsername(username: String) : Utilisateur
 
     //@Insert
-    fun insertUser(vararg utilisateur: Utilisateur)
+    fun insert(vararg utilisateur: Utilisateur)
+
+    //@Update
+    fun update(vararg utilisateur: Utilisateur)
+
+    //@Delete
+    fun delete(vararg utilisateur: Utilisateur)
 }

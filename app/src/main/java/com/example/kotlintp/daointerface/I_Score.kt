@@ -8,5 +8,11 @@ interface I_Score {
     fun getAllScoreForCategory(categoryId: Int) : Array<Score>
 
     //@Insert
-    fun setScore(userId : Int, categoryId : Int, score : Int)
+    fun insert(vararg score: Score)
+
+    //@Update
+    fun update(vararg score: Score)
+
+    //@Delete
+    fun delete(vararg score: Score)
 }
