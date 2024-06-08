@@ -1,11 +1,19 @@
 <resources>
-    <string name="app_name">KotlinTP</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_username">Username</string>
-    <string name="action_connection">Connect</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="app_name">Quiz</string>
+    <!-- Strings used for fragments for navigation -->
+    <!-- Main Activity strings -->
+    <string name="description_logo">theLogo</string>
+    <string name="welcome">Bienvenue dans le Quiz Game !</string>
+    <string name="enter_pseudo">Sélectionne un pseudo</string>
+    <string name="pseudo">Ton pseudo</string>
+    <string name="validate">CONTINUE</string>
+    <string name="category_fragment_label">Catégories</string>
+    <string name="back">Retour à l\'accueil</string>
+    <string name="second_fragment_label">Quiz</string>
+    <string name="third_fragment_label">Scores</string>
+    <string name="scoreboard">Scoreboard</string>
+    <string name="best_score">Les meilleurs scores</string>
+    <string name="score">Score: 0/10</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

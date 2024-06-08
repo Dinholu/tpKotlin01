@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/CategoryFragment">
+
+    <fragment
+        android:id="@+id/CategoryFragment"
+        android:name="com.example.quizz.CategoryFragment"
+        android:label="Catégories"
+        tools:layout="@layout/fragment_category">
+        <action
+            android:id="@+id/action_CategoryFragment_to_QuizFragment"
+            app:destination="@id/QuizFragment" />
+        <action
+            android:id="@+id/action_QuestionFragment_to_ScoreFragment"
+            app:destination="@id/ScoreFragment">
+            <argument
+                android:name="score"
+                app:argType="integer" />
+            <argument
+                android:name="username"
+                app:argType="string" />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/QuizFragment"
+        android:name="com.example.quizz.QuizFragment"
+        android:label="QuizFragment"
+        tools:layout="@layout/fragment_quiz">
+        <argument
+            android:name="quizzes"
+            app:argType="string"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_QuizFragment_to_ScoreFragment"
+            app:destination="@id/ScoreFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ScoreFragment"
+        android:name="com.example.quizz.ScoreFragment"
+        android:label="@string/third_fragment_label"
+        tools:layout="@layout/fragment_score">
+        <argument
+            android:name="score"
+            app:argType="integer" />
+        <argument
+            android:name="categoryId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_ScoreFragment_to_CategoryFragment"
+            app:destination="@id/CategoryFragment" />
+    </fragment>
+</navigation>
