@@ -10,11 +10,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.ui.window.application
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.quizz.DAO.ScoreDAO
 import com.example.quizz.data.Score
@@ -114,7 +112,9 @@ class QuizFragment : Fragment() {
         timer?.cancel()
         timer = object : CountDownTimer(TIMER_DELAY.toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.timerText.text = "Temps restant : ${millisUntilFinished / 1000}"
+                _binding?.let {
+                    it.timerText.text = "Temps restant : ${millisUntilFinished / 1000}"
+                }
             }
 
             override fun onFinish() {
@@ -137,89 +137,101 @@ class QuizFragment : Fragment() {
     }
 
     private fun displayCurrentQuestion() {
-        if (currentPageIndex >= quizzes.size) return
+        _binding?.let { binding ->
+            if (currentPageIndex >= quizzes.size) return
 
-        binding.questionContainer.removeAllViews()
-        binding.questionProgressBar.progress = currentPageIndex + 1
+            binding.questionContainer.removeAllViews()
+            binding.questionProgressBar.progress = currentPageIndex + 1
 
-        val quiz = quizzes[currentPageIndex]
-        Log.d(TAG, "Displaying question: ${quiz.question}")
+            val quiz = quizzes[currentPageIndex]
+            Log.d(TAG, "Displaying question: ${quiz.question}")
 
-        val questionTextView = TextView(requireContext()).apply {
-            text = quiz.question
-            typeface = resources.getFont(R.font.robotomedium)
-            textSize = 22f
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        }
-        binding.questionContainer.addView(questionTextView)
-
-        val answers = mutableListOf<String>()
-        answers.add(quiz.answer)
-        answers.addAll(quiz.badAnswers)
-        answers.shuffle() // Mélanger les réponses
-
-        val marginTopInPixels = resources.getDimensionPixelSize(R.dimen.fab_margin)
-
-        for (answer in answers) {
-            val answerButton = Button(requireContext()).apply {
-                text = answer
+            val questionTextView = TextView(requireContext()).apply {
+                text = quiz.question
                 typeface = resources.getFont(R.font.robotomedium)
-                setTextColor(resources.getColor(R.color.white))
-                setBackgroundResource(R.drawable.rounded_button)
-                textSize = 15f
-
-                layoutParams = ViewGroup.MarginLayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                ).apply {
-                    setMargins(0, marginTopInPixels, 0, 0)
-                }
-
-                setOnClickListener {
-                    timer?.cancel()
-                    disableButtons()
-                    checkAnswer(this, answer == quiz.answer, quiz.answer)
-                }
+                textSize = 22f
+                setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
-            binding.questionContainer.addView(answerButton)
+            binding.questionContainer.addView(questionTextView)
+
+            val answers = mutableListOf<String>()
+            answers.add(quiz.answer)
+            answers.addAll(quiz.badAnswers)
+            answers.shuffle() // Mélanger les réponses
+
+            val marginTopInPixels = resources.getDimensionPixelSize(R.dimen.fab_margin)
+
+            for (answer in answers) {
+                val answerButton = Button(requireContext()).apply {
+                    text = answer
+                    typeface = resources.getFont(R.font.robotomedium)
+                    setTextColor(resources.getColor(R.color.white))
+                    setBackgroundResource(R.drawable.rounded_button)
+                    textSize = 15f
+
+                    layoutParams = ViewGroup.MarginLayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    ).apply {
+                        setMargins(0, marginTopInPixels, 0, 0)
+                    }
+
+                    setOnClickListener {
+                        timer?.cancel()
+                        disableButtons()
+                        checkAnswer(this, answer == quiz.answer, quiz.answer)
+                    }
+                }
+                binding.questionContainer.addView(answerButton)
+            }
         }
     }
 
     private fun disableButtons() {
-        for (i in 0 until binding.questionContainer.childCount) {
-            val view = binding.questionContainer.getChildAt(i)
-            if (view is Button) {
-                view.isEnabled = false
+        _binding?.let { binding ->
+            val childCount = binding.questionContainer.childCount
+            for (i in 0 until childCount) {
+                val view = binding.questionContainer.getChildAt(i)
+                if (view is Button) {
+                    view.isEnabled = false
+                }
             }
         }
     }
 
     private fun checkAnswer(selectedButton: Button, isCorrect: Boolean, correctAnswer: String) {
-        if (isCorrect) {
-            score++
-            selectedButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
-        } else {
-            selectedButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
-            showCorrectAnswer(correctAnswer)
+        _binding?.let { binding ->
+            if (isCorrect) {
+                score++
+                selectedButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+            } else {
+                selectedButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
+                showCorrectAnswer(correctAnswer)
+            }
+            updateScoreTextView()
+            binding.questionContainer.postDelayed({
+                currentPageIndex++
+                navigateToNextQuestion()
+            }, 2000) // Delay to show the result before moving to the next question
         }
-        updateScoreTextView()
-        binding.questionContainer.postDelayed({
-            currentPageIndex++
-            navigateToNextQuestion()
-        }, 2000) // Delay to show the result before moving to the next question
     }
 
     private fun showCorrectAnswer(correctAnswer: String) {
-        for (i in 0 until binding.questionContainer.childCount) {
-            val view = binding.questionContainer.getChildAt(i)
-            if (view is Button && view.text == correctAnswer) {
-                view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+        _binding?.let { binding ->
+            val childCount = binding.questionContainer.childCount
+            for (i in 0 until childCount) {
+                val view = binding.questionContainer.getChildAt(i)
+                if (view is Button && view.text == correctAnswer) {
+                    view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+                }
             }
         }
     }
 
     private fun updateScoreTextView() {
-        binding.scoreTextView.text = "Score: $score/${quizzes.size}"
+        _binding?.let {
+            it.scoreTextView.text = "Score: $score/${quizzes.size}"
+        }
     }
 
     private fun saveScoreToDatabase() {
@@ -228,7 +240,6 @@ class QuizFragment : Fragment() {
 
         lifecycleScope.launch {
             Log.d(TAG, "Inside saveScoreToDatabase coroutine")
-            //val categoryId = quizzes.firstOrNull()?.category?.let { categoryDao.getCategoryByName(it)?.id }?: return@launch
             val categoryId = this@QuizFragment.categoryId
             Log.d(TAG, "Category ID: $categoryId")
             val score =
