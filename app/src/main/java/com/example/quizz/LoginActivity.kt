@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -54,7 +55,12 @@ class LoginActivity : AppCompatActivity() {
                     Category(5, "Musique", "musique")
                 )
                 categories.forEach { category ->
-                    database.categoryDao().insert(category)
+                    try {
+                        database.categoryDao().insert(category)
+                        Log.d("InsertDebug", "Inserted category: ${category.name}")
+                    } catch (e: Exception) {
+                        Log.e("InsertError", "Failed to insert category", e)
+                    }
                 }
             }
             if (database.scoreDao().getNumberScores() == 0) {

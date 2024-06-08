@@ -30,6 +30,7 @@ suspend fun insertCategory(categoryDao: CategoryDao, category: Category) {
     val categoryExists = categoryDao.getCategoryById(category.id) != null
     if (categoryExists) {
         categoryDao.insert(category)
+        Log.d("Database", "Category inserted (${category.id})")
     } else {
         Log.e("Database", "Category with id ${category.id} does not exist.")
     }

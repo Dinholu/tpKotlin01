@@ -31,7 +31,8 @@ class Leaderboard : AppCompatActivity() {
 
     leaderboardRecyclerView = findViewById(R.id.leaderboardRecyclerView)
     leaderboardRecyclerView.layoutManager = LinearLayoutManager(this)
-    database = AppDatabase.getDatabase(applicationContext)
+    //database = AppDatabase.getDatabase(applicationContext)
+    database = (application as QuizApplication).database
 
     loadLeaderboard()
   }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuizFragment">
+    tools:context=".Leaderboard">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,6 +19,7 @@
             android:fontFamily="@font/robotomedium"
             android:text="@string/scoreboard"
             android:textSize="35sp"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toTopOf="@id/bestScoresTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -32,6 +33,7 @@
             android:padding="10dp"
             android:text="@string/best_score"
             android:textSize="25sp"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/scoreboard"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +48,7 @@
             android:lineSpacingExtra="10dp"
             android:padding="16dp"
             android:textSize="18sp"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -89,18 +89,18 @@ class CategoryFragment : Fragment() {
                 }
 
                 setOnClickListener {
-                    fetchQuizzes(category.slug, category.name)
+                    fetchQuizzes(category.slug, category.name, category.id)
                 }
             }
             binding.categoryButtons.addView(button)
         }
     }
-    private fun fetchQuizzes(categorySlug: String, categoryName: String) {
+    private fun fetchQuizzes(categorySlug: String, categoryName: String, categoryId: Int) {
         apiService.getQuizzes(limit = 10, category = categorySlug).enqueue(object : Callback<QuizResponse> {
             override fun onResponse(call: Call<QuizResponse>, response: Response<QuizResponse>) {
                 if (response.isSuccessful) {
                     val quizzes = response.body()?.quizzes ?: emptyList()
-                    navigateToQuizFragment(quizzes, categoryName)
+                    navigateToQuizFragment(quizzes, categoryName, categoryId)
                 }
             }
 
@@ -110,12 +110,13 @@ class CategoryFragment : Fragment() {
         })
     }
 
-    private fun navigateToQuizFragment(quizzes: List<Quiz>, categoryName: String) {
+    private fun navigateToQuizFragment(quizzes: List<Quiz>, categoryName: String, categoryId: Int) {
         val gson = Gson()
         val jsonQuizzes = gson.toJson(quizzes)
         val bundle = Bundle().apply {
             putString("quizzes", jsonQuizzes)
-            putString("categoryName", categoryName)  // Passez le nom de la catégorie
+            putString("categoryName", categoryName)
+            putInt("categoryId", categoryId)
         }
         findNavController().navigate(R.id.action_CategoryFragment_to_QuizFragment, bundle)
     }

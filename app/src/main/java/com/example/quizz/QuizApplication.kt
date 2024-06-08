@@ -15,4 +15,5 @@ class QuizApplication : Application() {
         )
             .fallbackToDestructiveMigration() // Permettre les migrations destructrices
             .build()
-    }}
+    }
+}
