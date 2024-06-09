@@ -2,12 +2,17 @@ package com.example.quizz
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.GridLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.example.quizz.databinding.FragmentCategoryBinding
 import androidx.lifecycle.lifecycleScope
@@ -68,33 +73,60 @@ class CategoryFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
+    private fun getCategoryImageResource(slug: String): Int {
+        val resourceId = resources.getIdentifier(slug, "drawable", requireContext().packageName)
+        return if (resourceId != 0) resourceId else R.drawable.art_litterature // Utilise une image par défaut si aucune correspondance n'est trouvée
+    }
     private fun createCategoryButtons(categories: List<Category>) {
         binding.categoryButtons.removeAllViews() // Clear any existing buttons
-        val marginTopInPixels = resources.getDimensionPixelSize(R.dimen.fab_margin)
+        val marginInPixels = resources.getDimensionPixelSize(R.dimen.fab_margin)
+        val gridLayout = binding.categoryButtons
 
         for (category in categories) {
-            val button = Button(requireContext()).apply {
+            val buttonLayout = LinearLayout(requireContext()).apply {
+                orientation = LinearLayout.VERTICAL
+                gravity = Gravity.CENTER
+                background = ContextCompat.getDrawable(context, R.drawable.rounded_button) // Apply button background
+                layoutParams = GridLayout.LayoutParams().apply {
+                    width = 0
+                    height = GridLayout.LayoutParams.WRAP_CONTENT
+                    columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
+                    rowSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f)
+                    setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels)
+                }
+                setPadding(marginInPixels, marginInPixels, marginInPixels, marginInPixels)
+            }
+
+            val imageView = ImageView(requireContext()).apply {
+                setImageResource(getCategoryImageResource(category.slug)) // Utilisez le slug pour obtenir l'image
+                background = ContextCompat.getDrawable(context, R.drawable.rounded_image) // Apply rounded image background
+                layoutParams = ViewGroup.MarginLayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(0, 0, 0, marginInPixels / 2)
+                }
+            }
+
+            val textView = TextView(requireContext()).apply {
                 text = category.name
                 typeface = resources.getFont(R.font.robotomedium)
                 setTextColor(resources.getColor(R.color.white))
-                setBackgroundResource(R.drawable.rounded_button)
                 textSize = 15f
-
-                layoutParams = ViewGroup.MarginLayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, // Width
-                    ViewGroup.LayoutParams.WRAP_CONTENT // Height
-                ).apply {
-                    setMargins(0, marginTopInPixels, 0, 0)
-                }
-
-                setOnClickListener {
-                    fetchQuizzes(category.slug, category.name, category.id)
-                }
+                gravity = Gravity.CENTER
             }
-            binding.categoryButtons.addView(button)
+
+            buttonLayout.addView(imageView)
+            buttonLayout.addView(textView)
+
+            buttonLayout.setOnClickListener {
+                fetchQuizzes(category.slug, category.name, category.id)
+            }
+
+            gridLayout.addView(buttonLayout)
         }
     }
+
     private fun fetchQuizzes(categorySlug: String, categoryName: String, categoryId: Int) {
         apiService.getQuizzes(limit = 10, category = categorySlug).enqueue(object : Callback<QuizResponse> {
             override fun onResponse(call: Call<QuizResponse>, response: Response<QuizResponse>) {

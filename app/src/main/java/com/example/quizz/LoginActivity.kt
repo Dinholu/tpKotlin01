@@ -52,7 +52,8 @@ class LoginActivity : AppCompatActivity() {
                     Category(2, "Littérature", "art_litterature"),
                     Category(3, "Jeux Vidéo", "jeux_videos"),
                     Category(4, "Culture G", "culture_generale"),
-                    Category(5, "Musique", "musique")
+                    Category(5, "Musique", "musique"),
+                    Category(6, "Sport", "sport"),
                 )
                 categories.forEach { category ->
                     try {
