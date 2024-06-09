@@ -4,12 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Leaderboard">
+    tools:context=".ScoreFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/trophyImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/trophee"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="16dp" />
 
         <TextView
             android:id="@+id/scoreboard"
@@ -20,38 +30,50 @@
             android:text="@string/scoreboard"
             android:textSize="35sp"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@id/bestScoresTextView"
+            app:layout_constraintTop_toBottomOf="@id/trophyImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/bestScoresTextView"
+        <TableLayout
+            android:id="@+id/scoreTable"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/robotomedium"
-            android:padding="10dp"
-            android:text="@string/best_score"
-            android:textSize="25sp"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/scoreboard"
+            app:layout_constraintTop_toBottomOf="@id/scoreboard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TableRow>
+                <TextView
+                    android:text="@string/scoring"
+                    android:layout_margin="8dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="@string/name"
+                    android:layout_margin="8dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_gravity="center" />
+            </TableRow>
+
+        </TableLayout>
 
         <TextView
-            android:id="@+id/scoreTextView"
+            android:id="@+id/noScoresTextView"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/robotomedium"
-            android:lineSpacingExtra="10dp"
-            android:padding="16dp"
+            android:layout_height="wrap_content"
+            android:text="Pas de score enregistré pour cette catégorie."
             android:textSize="18sp"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/scoreboard"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bestScoresTextView" />
+            android:layout_marginTop="16dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
