@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.quizz.data.Category
@@ -32,18 +33,22 @@ class LoginActivity : AppCompatActivity() {
         m_buttonSubmit = findViewById(R.id.buttonSubmit)
 
         m_buttonSubmit.setOnClickListener {
-            val usernameInput = editTextUsername.text.toString()
+            val usernameInput = editTextUsername.text.toString().trim()
 
-            val editor = sharedPreferences.edit()
-            editor.putString("username", usernameInput)
-            editor.apply()
+            if (usernameInput.isEmpty() || usernameInput.length > 5) {
+                Toast.makeText(this, "Le nom d'utilisateur doit contenir entre 1 et 5 caractères.", Toast.LENGTH_SHORT).show()
+            } else {
+                val editor = sharedPreferences.edit()
+                editor.putString("username", usernameInput)
+                editor.apply()
 
-            val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
-                putExtra("username", usernameInput)
+                val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
+                    putExtra("username", usernameInput)
+                }
+                startActivity(intent)
+
+                finish()
             }
-            startActivity(intent)
-
-            finish()
         }
         lifecycleScope.launch {
             if (database.categoryDao().getNumberCategory() == 0) {
