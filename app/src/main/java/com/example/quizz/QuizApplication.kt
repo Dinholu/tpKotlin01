@@ -13,7 +13,7 @@ class QuizApplication : Application() {
             applicationContext,
             AppDatabase::class.java, "quiz-database"
         )
-            .fallbackToDestructiveMigration() // Permettre les migrations destructrices
+            .fallbackToDestructiveMigration()
             .build()
     }
 }

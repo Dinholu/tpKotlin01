@@ -21,6 +21,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="16dp" />
 
+
+
         <TextView
             android:id="@+id/scoreboard"
             android:layout_width="wrap_content"
@@ -33,17 +35,35 @@
             app:layout_constraintTop_toBottomOf="@id/trophyImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
+        <TextView
+            android:id="@+id/finalScoreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/robotomedium"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/scoreboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
         <TableLayout
             android:id="@+id/scoreTable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            app:layout_constraintTop_toBottomOf="@id/scoreboard"
+            app:layout_constraintTop_toBottomOf="@id/finalScoreTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <TableRow>
+                <TextView
+                    android:text="@string/rank"
+                    android:layout_margin="8dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:layout_gravity="center" />
                 <TextView
                     android:text="@string/scoring"
                     android:layout_margin="8dp"

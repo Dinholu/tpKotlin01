@@ -1,5 +1,6 @@
 package com.example.quizz
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -111,6 +112,7 @@ class QuizFragment : Fragment() {
     private fun startTimer() {
         timer?.cancel()
         timer = object : CountDownTimer(TIMER_DELAY.toLong(), 1000) {
+            @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
                 _binding?.let {
                     it.timerText.text = "Temps restant : ${millisUntilFinished / 1000}"
@@ -118,8 +120,14 @@ class QuizFragment : Fragment() {
             }
 
             override fun onFinish() {
-                currentPageIndex++
-                navigateToNextQuestion()
+                _binding?.let { binding ->
+                    disableButtons()
+                    showCorrectAnswer(quizzes[currentPageIndex].answer)
+                    binding.questionContainer.postDelayed({
+                        currentPageIndex++
+                        navigateToNextQuestion()
+                    }, 2000) // Delay to show the correct answer before moving to the next question
+                }
             }
         }.start()
     }

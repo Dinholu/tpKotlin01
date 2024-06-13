@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.quizz.DAO.ScoreDAO
 import com.example.quizz.data.Score
 import com.example.quizz.databinding.FragmentScoreBinding
@@ -35,8 +37,20 @@ class ScoreFragment : Fragment() {
 
         arguments?.let {
             val categoryId = it.getInt("categoryId")
+            val finalScore = it.getInt("score")
             displayScores(categoryId)
+            displayFinalScore(finalScore)
         }
+
+        // Gestion du bouton de retour
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_ScoreFragment_to_CategoryFragment)
+        }
+    }
+
+    private fun displayFinalScore(finalScore: Int) {
+        binding.finalScoreTextView.text = getString(R.string.final_score, finalScore)
+        binding.finalScoreTextView.visibility = View.VISIBLE
     }
 
     private fun displayScores(categoryId: Int) {
@@ -50,6 +64,15 @@ class ScoreFragment : Fragment() {
                 binding.noScoresTextView.visibility = View.VISIBLE
             }
         }
+    }
+    private fun setColorByRank(textView: TextView, rank: Int) {
+        val color = when (rank) {
+            1 -> resources.getColor(R.color.gold, null)
+            2 -> resources.getColor(R.color.silver, null)
+            3 -> resources.getColor(R.color.bronze, null)
+            else -> resources.getColor(R.color.white, null)
+        }
+        textView.setTextColor(color)
     }
 
     private fun populateScoreTable(scores: List<Score>) {
@@ -65,16 +88,20 @@ class ScoreFragment : Fragment() {
             gravity = android.view.Gravity.CENTER
         }
 
-        val headerScoreTextView = TextView(context).apply {
-            text = "Score"
+        val headerRankTextView = TextView(context).apply {
+            text = "Rang"
             textSize = 18f
             setTextColor(resources.getColor(R.color.white, null))
             setPadding(8, 8, 8, 8)
             gravity = android.view.Gravity.CENTER
         }
 
-        val spacer = View(context).apply {
-            layoutParams = TableRow.LayoutParams(16, TableRow.LayoutParams.WRAP_CONTENT) // Spacer with fixed width
+        val headerScoreTextView = TextView(context).apply {
+            text = "Score"
+            textSize = 18f
+            setTextColor(resources.getColor(R.color.white, null))
+            setPadding(8, 8, 8, 8)
+            gravity = android.view.Gravity.CENTER
         }
 
         val headerNameTextView = TextView(context).apply {
@@ -85,13 +112,27 @@ class ScoreFragment : Fragment() {
             gravity = android.view.Gravity.CENTER
         }
 
+        headerRow.addView(headerRankTextView)
+        headerRow.addView(View(context).apply { layoutParams = TableRow.LayoutParams(16, TableRow.LayoutParams.WRAP_CONTENT) }) // Add a space between columns
         headerRow.addView(headerScoreTextView)
-        headerRow.addView(spacer)
+        headerRow.addView(View(context).apply { layoutParams = TableRow.LayoutParams(16, TableRow.LayoutParams.WRAP_CONTENT) }) // Add a space between columns
         headerRow.addView(headerNameTextView)
         tableLayout.addView(headerRow)
 
-        // Ajouter les lignes de score
-        for (score in scores) {
+
+        var displayedRank = 1
+        var previousScore = 1
+        var j = 0
+
+        for (i in scores.indices) {
+            if ( j > 10) break
+
+            val score = scores[i]
+            if (score.score != previousScore && j != 0) {
+                displayedRank++
+
+            }
+
             val tableRow = TableRow(context).apply {
                 layoutParams = TableRow.LayoutParams(
                     TableRow.LayoutParams.MATCH_PARENT,
@@ -100,30 +141,40 @@ class ScoreFragment : Fragment() {
                 gravity = android.view.Gravity.CENTER
             }
 
+            val rankTextView = TextView(context).apply {
+                text = displayedRank.toString()
+                textSize = 18f
+                setPadding(8, 8, 18, 8)
+                gravity = android.view.Gravity.CENTER
+            }
+            setColorByRank(rankTextView, displayedRank)
+
             val scoreTextView = TextView(context).apply {
                 text = score.score.toString()
                 textSize = 18f
-                setTextColor(resources.getColor(R.color.white, null))
-                setPadding(8, 8, 8, 8)
+                setPadding(8, 8, 18, 8)
                 gravity = android.view.Gravity.CENTER
             }
-
-            val spacer = View(context).apply {
-                layoutParams = TableRow.LayoutParams(70, TableRow.LayoutParams.WRAP_CONTENT) // Spacer with fixed width
-            }
+            setColorByRank(scoreTextView, displayedRank)
 
             val nameTextView = TextView(context).apply {
                 text = score.player
                 textSize = 18f
-                setTextColor(resources.getColor(R.color.white, null))
                 setPadding(8, 8, 8, 8)
                 gravity = android.view.Gravity.CENTER
             }
+            setColorByRank(nameTextView, displayedRank)
 
+            tableRow.addView(rankTextView)
+            tableRow.addView(View(context).apply { layoutParams = TableRow.LayoutParams(16, TableRow.LayoutParams.WRAP_CONTENT) }) // Add a space between columns
             tableRow.addView(scoreTextView)
-            tableRow.addView(spacer)
+            tableRow.addView(View(context).apply { layoutParams = TableRow.LayoutParams(16, TableRow.LayoutParams.WRAP_CONTENT) }) // Add a space between columns
             tableRow.addView(nameTextView)
             tableLayout.addView(tableRow)
+            previousScore = score.score
+            j++
         }
     }
+
+
 }

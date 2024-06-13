@@ -17,4 +17,8 @@
     <color name="black">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="red">#FF0000</color>
+    <color name="dark_purple">#1c0c38</color>
+    <color name="gold">#FFD700</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="bronze">#CD7F32</color>
 </resources>

@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/action_CategoryFragment_to_QuizFragment"
-            app:destination="@id/QuizFragment" />
+            app:destination="@id/QuizFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_QuestionFragment_to_ScoreFragment"
             app:destination="@id/ScoreFragment">
@@ -23,7 +27,6 @@
                 android:name="username"
                 app:argType="string" />
         </action>
-
     </fragment>
 
     <fragment
@@ -37,7 +40,11 @@
             app:nullable="false" />
         <action
             android:id="@+id/action_QuizFragment_to_ScoreFragment"
-            app:destination="@id/ScoreFragment" />
+            app:destination="@id/ScoreFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
 
     <fragment
@@ -53,6 +60,10 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_ScoreFragment_to_CategoryFragment"
-            app:destination="@id/CategoryFragment" />
+            app:destination="@id/CategoryFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
 </navigation>

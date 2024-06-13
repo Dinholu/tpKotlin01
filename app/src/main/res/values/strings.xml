@@ -4,6 +4,7 @@
     <!-- Main Activity strings -->
     <string name="description_logo">theLogo</string>
     <string name="welcome">Bienvenue dans le Quiz Game !</string>
+    <string name="final_score">Score final : %d</string>
     <string name="enter_pseudo">Sélectionne un pseudo</string>
     <string name="pseudo">Ton pseudo</string>
     <string name="validate">CONTINUE</string>
@@ -17,5 +18,6 @@
     <string name="scoring">Score</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="rank">Rang</string>
 
 </resources>
