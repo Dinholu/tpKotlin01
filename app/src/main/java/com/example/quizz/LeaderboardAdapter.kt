@@ -13,7 +13,9 @@ class LeaderboardAdapter(private val items: List<LeaderboardItem>) : RecyclerVie
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val categoryName: TextView = view.findViewById(R.id.categoryName)
-        val scores: TextView = view.findViewById(R.id.scores)
+        val score1: TextView = view.findViewById(R.id.score1)
+        val score2: TextView = view.findViewById(R.id.score2)
+        val score3: TextView = view.findViewById(R.id.score3)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,11 +27,9 @@ class LeaderboardAdapter(private val items: List<LeaderboardItem>) : RecyclerVie
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.categoryName.text = item.categoryName
-        holder.scores.text = if (item.scores.isEmpty()) {
-            "No scores recorded"
-        } else {
-            item.scores.joinToString("\n") { "${it.player}: ${it.score}" }
-        }
+        holder.score1.text = item.scores.getOrNull(0)?.let { "${it.player}: ${it.score}" } ?: "No score"
+        holder.score2.text = item.scores.getOrNull(1)?.let { "${it.player}: ${it.score}" } ?: "No score"
+        holder.score3.text = item.scores.getOrNull(2)?.let { "${it.player}: ${it.score}" } ?: "No score"
     }
 
     override fun getItemCount(): Int = items.size

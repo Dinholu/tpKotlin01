@@ -5,11 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +26,7 @@ class LeaderboardFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_leaderboard, container, false)
 
         leaderboardRecyclerView = view.findViewById(R.id.leaderboardRecyclerView)
-        leaderboardRecyclerView.layoutManager = LinearLayoutManager(context)
+        leaderboardRecyclerView.layoutManager = GridLayoutManager(context, 2)
         database = (requireActivity().application as QuizApplication).database
 
         loadLeaderboard(view)
