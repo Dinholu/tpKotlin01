@@ -25,10 +25,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class CategoryFragment : Fragment() {
 
     private var _binding: FragmentCategoryBinding? = null
@@ -43,7 +39,6 @@ class CategoryFragment : Fragment() {
 
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
         database = (requireActivity().application as QuizApplication).database
-        // Initialiser Retrofit
         val retrofit = Retrofit.Builder()
             .baseUrl("https://quizzapi.jomoreschi.fr/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -53,8 +48,6 @@ class CategoryFragment : Fragment() {
 
         return binding.root
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,18 +59,18 @@ class CategoryFragment : Fragment() {
             val categories = database.categoryDao().getAllCategories()
             createCategoryButtons(categories)
         }
-
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
     private fun getCategoryImageResource(slug: String): Int {
-        val resourceId = resources.getIdentifier(slug, "drawable", requireContext().packageName)
-        return if (resourceId != 0) resourceId else R.drawable.art_litterature // Utilise une image par défaut si aucune correspondance n'est trouvée
+        val resourceId = resources.getIdentifier(slug+"_round", "mipmap", requireContext().packageName)
+        return if (resourceId != 0) resourceId else R.mipmap.ic_launcher_round
     }
+
     private fun createCategoryButtons(categories: List<Category>) {
         binding.categoryButtons.removeAllViews()
         val marginInPixels = resources.getDimensionPixelSize(R.dimen.fab_margin)
@@ -87,7 +80,7 @@ class CategoryFragment : Fragment() {
             val buttonLayout = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER
-                background = ContextCompat.getDrawable(context, R.drawable.rounded_button) // Apply button background
+                background = ContextCompat.getDrawable(context, R.drawable.selector) // Apply button background
                 layoutParams = GridLayout.LayoutParams().apply {
                     width = 0
                     height = GridLayout.LayoutParams.WRAP_CONTENT
@@ -96,17 +89,20 @@ class CategoryFragment : Fragment() {
                     setMargins(marginInPixels, marginInPixels, marginInPixels, marginInPixels)
                 }
                 setPadding(marginInPixels, marginInPixels, marginInPixels, marginInPixels)
+                elevation = 8f // Adding shadow for elevation
             }
 
             val imageView = ImageView(requireContext()).apply {
                 setImageResource(getCategoryImageResource(category.slug)) // Utilisez le slug pour obtenir l'image
-                background = ContextCompat.getDrawable(context, R.drawable.rounded_image) // Apply rounded image background
+                background = ContextCompat.getDrawable(context, R.drawable.selector) // Apply rounded image background
                 layoutParams = ViewGroup.MarginLayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 ).apply {
                     setMargins(0, 0, 0, marginInPixels / 2)
                 }
+                scaleType = ImageView.ScaleType.FIT_XY // Adjust the scale type
+                adjustViewBounds = true
             }
 
             val textView = TextView(requireContext()).apply {
@@ -154,11 +150,10 @@ class CategoryFragment : Fragment() {
         findNavController().navigate(R.id.action_CategoryFragment_to_QuizFragment, bundle)
     }
 
-    private fun createBundle(id: Int) : Bundle
-    {
+    private fun createBundle(id: Int): Bundle {
         val bundle = Bundle().apply {
             putInt("categoryId", id)
         }
-        return bundle;
+        return bundle
     }
 }

@@ -69,7 +69,7 @@
         android:id="@+id/buttonSubmit"
         android:layout_width="307dp"
         android:layout_height="47dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="56dp"
         android:backgroundTint="@color/blue_dark"
         android:fontFamily="@font/robotomedium"
         android:textSize="20sp"
@@ -78,6 +78,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextUsername"
-        app:layout_constraintVertical_bias="0.205" />
+        app:layout_constraintVertical_bias="0.205"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

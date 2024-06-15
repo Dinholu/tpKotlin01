@@ -71,11 +71,11 @@ class LoginActivity : AppCompatActivity() {
             }
             if (database.scoreDao().getNumberScores() == 0) {
                 val scores = listOf(
-                    Score(1, 1, 0, "x"),
-                    Score(2, 2, 0, "x"),
-                    Score(3, 2, 0, "x"),
-                    Score(4, 4, 0, "x"),
-                    Score(5, 2, 0, "x")
+                    Score(1, 1, 2, "Aliz"),
+                    Score(2, 2, 9, "Wrkt"),
+                    Score(3, 2, 10, "Ian"),
+                    Score(4, 4, 9, "Tang"),
+                    Score(5, 2, 0, "Leo")
                 )
                 scores.forEach { score ->
                     database.scoreDao().insert(score)

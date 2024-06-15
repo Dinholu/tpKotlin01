@@ -1,9 +1,15 @@
 package com.example.quizz
-
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +21,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.quizz.AppDatabase
+import com.example.quizz.CategoryDao
 import com.example.quizz.DAO.ScoreDAO
+import com.example.quizz.QuizApplication
+import com.example.quizz.R
 import com.example.quizz.data.Quiz
 import com.example.quizz.data.Score
 import com.example.quizz.databinding.FragmentQuizBinding
@@ -36,6 +46,8 @@ class QuizFragment : Fragment() {
     private lateinit var database: AppDatabase
     private lateinit var scoreDao: ScoreDAO
     private lateinit var categoryDao: CategoryDao
+    private val blinkHandler = Handler(Looper.getMainLooper())
+    private var blinkRunnable: Runnable? = null
 
     companion object {
         private const val TIMER_DELAY = 10000
@@ -107,6 +119,7 @@ class QuizFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         timer?.cancel()
+        blinkRunnable?.let { blinkHandler.removeCallbacks(it) }
         _binding = null
     }
 
@@ -231,11 +244,32 @@ class QuizFragment : Fragment() {
             for (i in 0 until childCount) {
                 val view = binding.questionContainer.getChildAt(i)
                 if (view is Button && view.text == correctAnswer) {
-                    // mettre du radius au bouton
-                    view.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_green)
+                    // Faire clignoter le bouton de la bonne réponse
+                    blinkCorrectAnswer(view)
+                    // Ajouter un Listener pour passer à la question suivante
+                    view.setOnClickListener {
+                        currentPageIndex++
+                        navigateToNextQuestion()
+                    }
                 }
             }
         }
+    }
+
+
+    private fun blinkCorrectAnswer(button: Button) {
+        val drawableGreen = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_green)
+        val drawableDefault = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button)
+
+        blinkRunnable = object : Runnable {
+            private var useGreen = true
+            override fun run() {
+                button.background = if (useGreen) drawableGreen else drawableDefault
+                useGreen = !useGreen
+                blinkHandler.postDelayed(this, 250)
+            }
+        }
+        blinkHandler.post(blinkRunnable!!)
     }
 
     private fun updateScoreTextView() {
