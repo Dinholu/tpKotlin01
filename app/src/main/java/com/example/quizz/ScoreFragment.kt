@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.activity.addCallback
@@ -92,7 +91,7 @@ class ScoreFragment : Fragment() {
             text = "Rang"
             textSize = 18f
             setTextColor(resources.getColor(R.color.white, null))
-            setPadding(8, 8, 8, 8)
+            setPadding(8, 8, 18, 8)
             gravity = android.view.Gravity.CENTER
         }
 
@@ -108,7 +107,7 @@ class ScoreFragment : Fragment() {
             text = "Nom"
             textSize = 18f
             setTextColor(resources.getColor(R.color.white, null))
-            setPadding(8, 8, 8, 8)
+            setPadding(18, 8, 8, 8)
             gravity = android.view.Gravity.CENTER
         }
 

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.quizz.DAO.ScoreDAO
+import com.example.quizz.data.Quiz
 import com.example.quizz.data.Score
 import com.example.quizz.databinding.FragmentQuizBinding
 import com.google.gson.Gson
@@ -37,7 +38,7 @@ class QuizFragment : Fragment() {
     private lateinit var categoryDao: CategoryDao
 
     companion object {
-        private const val TIMER_DELAY = 10000 // 10 seconds in milliseconds
+        private const val TIMER_DELAY = 10000
         private const val TAG = "QuizFragment"
         private const val STATE_CURRENT_PAGE_INDEX = "currentPageIndex"
         private const val STATE_SCORE = "score"
@@ -211,16 +212,16 @@ class QuizFragment : Fragment() {
         _binding?.let { binding ->
             if (isCorrect) {
                 score++
-                selectedButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+                selectedButton.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_green)
             } else {
-                selectedButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.red))
+                selectedButton.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_red)
                 showCorrectAnswer(correctAnswer)
             }
             updateScoreTextView()
             binding.questionContainer.postDelayed({
                 currentPageIndex++
                 navigateToNextQuestion()
-            }, 2000) // Delay to show the result before moving to the next question
+            }, 2000)
         }
     }
 
@@ -230,7 +231,8 @@ class QuizFragment : Fragment() {
             for (i in 0 until childCount) {
                 val view = binding.questionContainer.getChildAt(i)
                 if (view is Button && view.text == correctAnswer) {
-                    view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.green))
+                    // mettre du radius au bouton
+                    view.background = ContextCompat.getDrawable(requireContext(), R.drawable.rounded_button_green)
                 }
             }
         }

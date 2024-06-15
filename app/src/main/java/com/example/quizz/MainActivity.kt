@@ -2,7 +2,7 @@ package com.example.quizz
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -29,14 +29,26 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_game)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        binding.btnLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
 
-        binding.btnScore.setOnClickListener {
-            val intent = Intent(this, Leaderboard::class.java)
-            startActivity(intent)
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_changer_pseudo -> {
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_voir_scores -> {
+                    val intent = Intent(this, Leaderboard::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.navigation_voir_categories -> {
+                    navController.navigate(R.id.CategoryFragment)
+                    true
+                }
+                else -> false
+            }
         }
 
         lifecycleScope.launch {
@@ -54,7 +66,6 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.action_ScoreFragment_to_CategoryFragment)
                 true
             }
-
             else -> navController.navigateUp() || super.onSupportNavigateUp()
         }
     }

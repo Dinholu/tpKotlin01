@@ -1,13 +1,11 @@
 package com.example.quizz
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -17,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.quizz.databinding.FragmentCategoryBinding
 import androidx.lifecycle.lifecycleScope
 import com.example.quizz.data.Category
+import com.example.quizz.data.Quiz
+import com.example.quizz.data.Quizzes
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -24,6 +24,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -59,7 +60,7 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val playerName = view.findViewById<TextView>(R.id.playerName)
-        playerName.text = activity?.intent?.getStringExtra("username") ?: ""
+        playerName.text = ("Bienvenue " + activity?.intent?.getStringExtra("username") + "!")
 
         lifecycleScope.launch {
             val categories = database.categoryDao().getAllCategories()
@@ -78,7 +79,7 @@ class CategoryFragment : Fragment() {
         return if (resourceId != 0) resourceId else R.drawable.art_litterature // Utilise une image par défaut si aucune correspondance n'est trouvée
     }
     private fun createCategoryButtons(categories: List<Category>) {
-        binding.categoryButtons.removeAllViews() // Clear any existing buttons
+        binding.categoryButtons.removeAllViews()
         val marginInPixels = resources.getDimensionPixelSize(R.dimen.fab_margin)
         val gridLayout = binding.categoryButtons
 
@@ -128,15 +129,15 @@ class CategoryFragment : Fragment() {
     }
 
     private fun fetchQuizzes(categorySlug: String, categoryName: String, categoryId: Int) {
-        apiService.getQuizzes(limit = 10, category = categorySlug).enqueue(object : Callback<QuizResponse> {
-            override fun onResponse(call: Call<QuizResponse>, response: Response<QuizResponse>) {
+        apiService.getQuizzes(limit = 10, category = categorySlug).enqueue(object : Callback<Quizzes> {
+            override fun onResponse(call: Call<Quizzes>, response: Response<Quizzes>) {
                 if (response.isSuccessful) {
                     val quizzes = response.body()?.quizzes ?: emptyList()
                     navigateToQuizFragment(quizzes, categoryName, categoryId)
                 }
             }
 
-            override fun onFailure(call: Call<QuizResponse>, t: Throwable) {
+            override fun onFailure(call: Call<Quizzes>, t: Throwable) {
                 // Gérer les erreurs ici
             }
         })

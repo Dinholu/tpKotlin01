@@ -13,6 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="25sp"
             tools:context=".QuizFragment">
 
             <TextView
@@ -20,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Temps restant : 10"
+                android:text="@string/temps_restant_10"
                 android:textSize="18sp"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -32,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Score: 0"
+                android:text="@string/score_0"
                 android:textSize="18sp"
                 android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_voir_categories"
+        android:icon="@drawable/ic_categories"
+        android:title="@string/quiz" />
+    <item
+        android:id="@+id/navigation_voir_scores"
+        android:icon="@drawable/ic_scores"
+        android:title="@string/voir_les_scores" />
+    <item
+        android:id="@+id/navigation_changer_pseudo"
+        android:icon="@drawable/ic_change_pseudo"
+        android:title="@string/changer_de_pseudo" />
+</menu>
