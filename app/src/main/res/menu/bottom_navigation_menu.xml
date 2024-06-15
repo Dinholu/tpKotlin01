@@ -10,6 +10,6 @@
         android:title="@string/voir_les_scores" />
     <item
         android:id="@+id/navigation_changer_pseudo"
-        android:icon="@drawable/ic_change_pseudo"
+        android:icon="@drawable/ic_off"
         android:title="@string/changer_de_pseudo" />
 </menu>

@@ -39,8 +39,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_voir_scores -> {
-                    val intent = Intent(this, Leaderboard::class.java)
-                    startActivity(intent)
+                    navController.navigate(R.id.LeaderboardFragment)
                     true
                 }
                 R.id.navigation_voir_categories -> {
@@ -50,6 +49,26 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.CategoryFragment, R.id.LeaderboardFragment))
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.LeaderboardFragment -> {
+                    supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                    bottomNavigationView.menu.findItem(R.id.navigation_voir_scores).isChecked = true
+                }
+                R.id.CategoryFragment -> {
+                    bottomNavigationView.menu.findItem(R.id.navigation_voir_categories).isChecked = true
+                }
+                else -> {
+                    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                }
+            }
+        }
+
 
         lifecycleScope.launch {
             val categories = database.categoryDao().getAllCategories()

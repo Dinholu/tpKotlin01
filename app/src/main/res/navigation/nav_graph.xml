@@ -28,11 +28,23 @@
                 app:argType="string" />
         </action>
     </fragment>
-
+    <fragment
+        android:id="@+id/LeaderboardFragment"
+        android:name="com.example.quizz.LeaderboardFragment"
+        android:label="Leaderboard"
+        tools:layout="@layout/fragment_leaderboard">
+        <action
+            android:id="@+id/action_LeaderboardFragment_to_CategoryFragment"
+            app:destination="@id/CategoryFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/slide_out"
+            app:popEnterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
+    </fragment>
     <fragment
         android:id="@+id/QuizFragment"
         android:name="com.example.quizz.QuizFragment"
-        android:label="QuizFragment"
+        android:label="Quiz"
         tools:layout="@layout/fragment_quiz">
         <argument
             android:name="quizzes"
