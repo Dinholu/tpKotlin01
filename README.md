@@ -44,12 +44,18 @@ Le joueur peut enfin se déconnecter afin de laisser un autre joueur s'amuser.
   - `LeaderboardFragment` : Tableau des meilleurs scores.
 
 ## Installation
-1. Clonez le dépôt :
+1. Installation developpement 
+
+a. Clonez le dépôt :
    ```bash
    git clone https://github.com/votre-utilisateur/quizapp.git
-    Ouvrez le projet avec Android Studio.
-    Compilez et exécutez l'application sur un appareil ou un émulateur Android.
    ```
+b. Ouvrez le projet avec Android Studio.
+c. Compilez et exécutez l'application sur un appareil ou un émulateur Android.
+
+2. Installation de l'APK
+   Installer l'APK de release sur votre téléphone
+
 
 ## Utilisation
 
@@ -68,6 +74,6 @@ Le joueur peut enfin se déconnecter afin de laisser un autre joueur s'amuser.
 - Authentification : SharedPreferences
 - Interface utilisateur : Android Jetpack Components (Navigation, LiveData, ViewModel)
 
-Contributeurs
-@ShortLegsFox alias Ian Bellot
-@Dinholu alias Alizée HETT
+## Contributeurs
+[@ShortLegsFox](https://github.com/ShortLegsFox) alias Ian Bellot <br>
+[@Dinholu](https://github.com/Dinholu) alias Alizée HETT
