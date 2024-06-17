@@ -37,18 +37,19 @@ Le joueur peut enfin se déconnecter afin de laisser un autre joueur s'amuser.
 
 ## Structure de l'application
 - **LoginActivity** : Activité de connexion.
-- **Fragments** :
-  - `CategoriesFragment` : Sélection de la catégorie de quiz.
-  - `QuizFragment` : Questionnaire de quiz.
-  - `ScoreFragment` : Affichage du score final.
-  - `LeaderboardFragment` : Tableau des meilleurs scores.
+- **MainActivity** : Activité principal contenant plusieurs fragments:
+  - **Fragments** :
+    - `CategoriesFragment` : Sélection de la catégorie de quiz.
+    - `QuizFragment` : Questionnaire de quiz.
+    - `ScoreFragment` : Affichage du score final.
+    - `LeaderboardFragment` : Tableau des meilleurs scores.
 
 ## Installation
 1. Installation developpement 
 
 a. Clonez le dépôt :
    ```bash
-   git clone https://github.com/votre-utilisateur/quizapp.git
+   git clone https://github.com/Dinholu/quizapp.git
    ```
 b. Ouvrez le projet avec Android Studio.
 c. Compilez et exécutez l'application sur un appareil ou un émulateur Android.
